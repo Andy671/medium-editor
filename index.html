@@ -53,6 +53,8 @@
             
             value = value.replace(/<p([^<]*)>/g, '');
             value = value.replace(/<\/p>/g, '<br>\\n\\n');
+            
+            value = value.replace(/\'/g, "\\'");
 
             document.getElementById('outputText').innerHTML = value;
         }
