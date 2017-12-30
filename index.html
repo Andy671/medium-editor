@@ -25,9 +25,10 @@
     <div id="container">
         <h4>Android Strings Text Editor by Andy671</h4>
         <div id="textInput" class="editable">
-        
         </div>
         <button onclick="outputText()">Convert to XML String Resource</button>
+        <div id="outputText">
+        </div>
     </div>
     
 
@@ -41,21 +42,35 @@
                     align: 'right',
                     sticky: true,
                     updateOnEmptySelection: true
-                    
                 }
             }),
             cssLink = document.getElementById('medium-editor-theme');
+        editor.subscribe('editableInput', function (event, editable) {
+            outputText();
+        });
 
         document.getElementById('sel-themes').addEventListener('change', function () {
             cssLink.href = 'bower_components/medium-editor/dist/css/' + this.value + '.css';
         });
         
         function outputText(){
-            var value = document.getElementById('textInput').innerHTML.replace (/<\/p>/g, '\n\\n\\n');
-            value = value.replace (/<p>/g, '');
-            value = value.replace(/<br>/g, '\n\\n');
-            value = value.replace(/style=""/,'');
-            alert(value);
+            var value = document.getElementById('textInput').innerHTML;
+            
+            value = value.replace(/<br>/g, '<br>\\n');
+            
+            value = value.replace(/<b([^<r]*)>/,'\&lt;b&gt;');
+            value = value.replace(/<\/b>/,'\&lt;\/b&gt;');
+            
+            value = value.replace(/<p([^<]*)>/g, '');
+            value = value.replace(/<\/p>/g, '<br>\\n\\n');
+            
+            value = value.replace(/<i([^<]*)>/,'\&lt;i&gt;');
+            value = value.replace(/<\/i>/,'\&lt;\/i&gt;');
+            
+            value = value.replace(/<u([^<]*)>/,'\&lt;u&gt;');
+            value = value.replace(/<\/u>/,'\&lt;\/u&gt;');
+
+            document.getElementById('outputText').innerHTML = value;
         }
     </script>
 </body>
