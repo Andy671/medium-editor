@@ -6,22 +6,11 @@
     <link rel="stylesheet" href="css/demo.css">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="bower_components/medium-editor/dist/css/medium-editor.css">
-    <link rel="stylesheet" href="bower_components/medium-editor/dist/css/themes/default.css" id="medium-editor-theme">
+    <link rel="stylesheet" href="bower_components/medium-editor/dist/css/themes/bootstrap.css" id="medium-editor-theme">
 </head>
 <body>
     <div id="version"></div>
-    <div class="top-bar">
-        Theme:
-        <select id="sel-themes">
-            <option value="themes/default" selected>default</option>
-            <option value="themes/roman">roman</option>
-            <option value="themes/mani">mani</option>
-            <option value="themes/flat">flat</option>
-            <option value="themes/bootstrap">bootstrap</option>
-            <option value="themes/tim">tim</option>
-            <option value="themes/beagle">beagle</option>
-        </select>
-    </div>
+    
     <div id="container">
         <h4>Android Strings Text Editor by Andy671</h4>
         <div id="textInput" class="editable">
@@ -47,27 +36,23 @@
         editor.subscribe('editableInput', function (event, editable) {
             outputText();
         });
-
-        document.getElementById('sel-themes').addEventListener('change', function () {
-            cssLink.href = 'bower_components/medium-editor/dist/css/' + this.value + '.css';
-        });
         
         function outputText(){
             var value = document.getElementById('textInput').innerHTML;
             
             value = value.replace(/<br>/g, '<br>\\n');
             
-            value = value.replace(/<b([^<r]*)>/,'\&lt;b&gt;');
-            value = value.replace(/<\/b>/,'\&lt;\/b&gt;');
+            value = value.replace(/<b([^<r]*)>/g,'\&lt;b&gt;');
+            value = value.replace(/<\/b>/g,'\&lt;\/b&gt;');
+            
+            value = value.replace(/<i([^<]*)>/g,'\&lt;i&gt;');
+            value = value.replace(/<\/i>/g,'\&lt;\/i&gt;');
+            
+            value = value.replace(/<u([^<]*)>/g,'\&lt;u&gt;');
+            value = value.replace(/<\/u>/g,'\&lt;\/u&gt;');
             
             value = value.replace(/<p([^<]*)>/g, '');
             value = value.replace(/<\/p>/g, '<br>\\n\\n');
-            
-            value = value.replace(/<i([^<]*)>/,'\&lt;i&gt;');
-            value = value.replace(/<\/i>/,'\&lt;\/i&gt;');
-            
-            value = value.replace(/<u([^<]*)>/,'\&lt;u&gt;');
-            value = value.replace(/<\/u>/,'\&lt;\/u&gt;');
 
             document.getElementById('outputText').innerHTML = value;
         }
